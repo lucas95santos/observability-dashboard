@@ -14,6 +14,7 @@
   "dependencies": {
     "@fastify/cors": "^11.2.0",
     "@fastify/websocket": "^11.2.0",
+    "@repo/types": "*",
     "fastify": "^5.8.5",
     "zod": "^4.4.3"
   },
