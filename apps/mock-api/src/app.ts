@@ -5,6 +5,7 @@ import { config } from "./config.js";
 import { ServiceSimulator } from "./simulator.js";
 import { healthRoutes } from "./routes/health.js";
 import { createApiRoutes } from "./routes/api.js";
+import { createWebSocketRoutes } from "./routes/websocket.js";
 
 export async function buildApp() {
   const app = Fastify({ logger: config.NODE_ENV !== "test" });
@@ -15,5 +16,6 @@ export async function buildApp() {
   app.addHook("onClose", async () => simulator.close());
   await app.register(healthRoutes);
   await app.register(createApiRoutes(simulator));
+  await app.register(createWebSocketRoutes(simulator));
   return app;
 }
