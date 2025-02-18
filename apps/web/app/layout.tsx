@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { Providers } from "./providers";
 import "./globals.css";
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -32,14 +33,16 @@ export default function RootLayout({
       className={`${ibmPlexSans.variable} ${jetbrainsMono.variable}`}
     >
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          storageKey="dashboard-theme"
-          enableSystem={false}
-        >
-          {children}
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            storageKey="dashboard-theme"
+            enableSystem={false}
+          >
+            {children}
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
