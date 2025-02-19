@@ -1,15 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { PanelLeft, Activity, BarChart2, Bell, Settings, Layers } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  PanelLeft,
+  Activity,
+  BarChart2,
+  Bell,
+  Settings,
+  Layers,
+} from "lucide-react";
 import { ThemeToggle } from "../theme-toggle";
 
 const NAV_ITEMS = [
-  { icon: Activity,  label: "Overview" },
-  { icon: BarChart2, label: "Metrics" },
-  { icon: Layers,    label: "Traces" },
-  { icon: Bell,      label: "Alerts" },
-  { icon: Settings,  label: "Settings" },
+  { icon: Activity, label: "Overview", href: "/" },
+  { icon: BarChart2, label: "Metrics", href: "/metrics" },
+  { icon: Layers, label: "Logs", href: "/logs" },
+  { icon: Bell, label: "Alerts", href: "/alerts" },
+  { icon: Settings, label: "Settings", href: "/settings" },
 ];
 
 interface ShellProps {
@@ -18,8 +27,14 @@ interface ShellProps {
 
 export function Shell({ children }: ShellProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const pathname = usePathname();
 
   const sidebarWidth = collapsed ? 60 : 240;
+
+  function isActive(href: string) {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  }
 
   return (
     <div
@@ -120,43 +135,55 @@ export function Shell({ children }: ShellProps) {
               gap: "0.125rem",
             }}
           >
-            {NAV_ITEMS.map(({ icon: Icon, label }) => (
-              <button
-                key={label}
-                title={collapsed ? label : undefined}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.625rem",
-                  padding: "0.5rem",
-                  borderRadius: "0.375rem",
-                  border: "none",
-                  background: "transparent",
-                  color: "var(--fg-muted)",
-                  cursor: "pointer",
-                  fontSize: "0.8125rem",
-                  fontWeight: 400,
-                  textAlign: "left",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  width: "100%",
-                  transition: "color 0.15s, background 0.15s",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLButtonElement;
-                  el.style.color = "var(--fg)";
-                  el.style.background = "var(--bg-elevated)";
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLButtonElement;
-                  el.style.color = "var(--fg-muted)";
-                  el.style.background = "transparent";
-                }}
-              >
-                <Icon size={15} strokeWidth={1.75} style={{ flexShrink: 0 }} aria-hidden />
-                {!collapsed && <span>{label}</span>}
-              </button>
-            ))}
+            {NAV_ITEMS.map(({ icon: Icon, label, href }) => {
+              const active = isActive(href);
+              return (
+                <Link
+                  key={label}
+                  href={href}
+                  title={collapsed ? label : undefined}
+                  aria-label={label}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.625rem",
+                    padding: "0.5rem",
+                    borderRadius: "0.375rem",
+                    border: "none",
+                    background: active ? "var(--bg-elevated)" : "transparent",
+                    color: active ? "var(--fg)" : "var(--fg-muted)",
+                    cursor: "pointer",
+                    fontSize: "0.8125rem",
+                    fontWeight: active ? 500 : 400,
+                    textDecoration: "none",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    width: "100%",
+                    transition: "color 0.15s, background 0.15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (active) return;
+                    const el = e.currentTarget as HTMLAnchorElement;
+                    el.style.color = "var(--fg)";
+                    el.style.background = "var(--bg-elevated)";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (active) return;
+                    const el = e.currentTarget as HTMLAnchorElement;
+                    el.style.color = "var(--fg-muted)";
+                    el.style.background = "transparent";
+                  }}
+                >
+                  <Icon
+                    size={15}
+                    strokeWidth={1.75}
+                    style={{ flexShrink: 0 }}
+                    aria-hidden
+                  />
+                  {!collapsed && <span>{label}</span>}
+                </Link>
+              );
+            })}
           </nav>
         </aside>
 
