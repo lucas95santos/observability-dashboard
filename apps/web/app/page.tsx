@@ -1,35 +1,23 @@
 import { Shell } from "../components/layout/shell";
+import { RealtimeDashboard } from "../components/dashboard/realtime-dashboard";
+import { getServices } from "../lib/api";
+import type { ServiceMetrics } from "@repo/types";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  let initialServices: ServiceMetrics[] = [];
+  try {
+    initialServices = await getServices(
+      process.env.API_URL ?? "http://localhost:3001",
+    );
+  } catch {
+    // mock-api may not be running in build/test; render empty state
+  }
+
   return (
     <Shell>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.375rem",
-        }}
-      >
-        <h1
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "1.25rem",
-            fontWeight: 600,
-            color: "var(--fg)",
-            letterSpacing: "-0.01em",
-          }}
-        >
-          Dashboard
-        </h1>
-        <p
-          style={{
-            fontSize: "0.875rem",
-            color: "var(--fg-muted)",
-          }}
-        >
-          Select a view from the sidebar.
-        </p>
-      </div>
+      <RealtimeDashboard initialServices={initialServices} />
     </Shell>
   );
 }
