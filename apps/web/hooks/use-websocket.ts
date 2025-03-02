@@ -75,7 +75,24 @@ export function useWebSocket(url: string) {
     return () => {
       unmounted.current = true;
       if (retryTimer.current) clearTimeout(retryTimer.current);
-      wsRef.current?.close();
+
+      const ws = wsRef.current;
+      if (!ws) return;
+
+      ws.onmessage = null;
+      ws.onerror = null;
+      ws.onclose = null;
+
+      if (ws.readyState === WebSocket.CONNECTING) {
+        // Close only after connection is established to avoid the
+        // "WebSocket closed before connection established" browser error
+        ws.onopen = () => ws.close();
+      } else {
+        ws.onopen = null;
+        ws.close();
+      }
+
+      wsRef.current = null;
     };
   }, [connect]);
 
