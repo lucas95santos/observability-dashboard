@@ -119,8 +119,8 @@ export const ServiceStatusCard = memo(function ServiceStatusCard({
         </div>
 
         {/* Sparkline */}
-        <div style={{ height: 40, marginTop: "0.25rem" }}>
-          <ResponsiveContainer width="100%" height="100%">
+        <div style={{ marginTop: "0.25rem" }}>
+          <ResponsiveContainer width="100%" height={40} minWidth={0}>
             <AreaChart data={sparklineData} margin={{ top: 2, right: 0, bottom: 0, left: 0 }}>
               <defs>
                 <linearGradient id={`grad-${service.serviceId}`} x1="0" y1="0" x2="0" y2="1">

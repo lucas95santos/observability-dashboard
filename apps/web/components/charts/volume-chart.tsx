@@ -77,7 +77,7 @@ export const VolumeChart = memo(function VolumeChart({
       <div style={headerStyle}>
         <span style={titleStyle}>Request Volume</span>
       </div>
-      <ResponsiveContainer width="100%" height={200}>
+      <ResponsiveContainer width="100%" height={200} minWidth={0}>
         <BarChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }} barSize={8}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
           <XAxis
