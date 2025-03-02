@@ -115,7 +115,7 @@ export const ServiceStatusCard = memo(function ServiceStatusCard({
         <div style={{ display: "flex", gap: "1rem" }}>
           <Metric label="Latency" value={`${Math.round(service.avgLatency)}ms`} />
           <Metric label="Errors" value={`${(service.errorRate * 100).toFixed(1)}%`} />
-          <Metric label="RPM" value={service.requestsPerMinute.toLocaleString()} />
+          <Metric label="RPM" value={service.requestsPerMinute.toLocaleString('en-US')} />
         </div>
 
         {/* Sparkline */}

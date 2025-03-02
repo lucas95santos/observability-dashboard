@@ -129,7 +129,7 @@ function ServiceHeader({
           <StatBox label="Status" value={service.status} color={statusColor} />
           <StatBox label="Avg latency" value={`${Math.round(service.avgLatency)}ms`} />
           <StatBox label="Error rate" value={`${(service.errorRate * 100).toFixed(2)}%`} />
-          <StatBox label="RPM" value={service.requestsPerMinute.toLocaleString()} />
+          <StatBox label="RPM" value={service.requestsPerMinute.toLocaleString('en-US')} />
         </div>
       ) : (
         <Skeleton width={360} height={64} />

@@ -113,7 +113,7 @@ function MetricsContent() {
             { label: "p95", value: `${Math.round(currentService.p95Latency)}ms` },
             { label: "p99", value: `${Math.round(currentService.p99Latency)}ms` },
             { label: "Error rate", value: `${(currentService.errorRate * 100).toFixed(2)}%` },
-            { label: "RPM", value: currentService.requestsPerMinute.toLocaleString() },
+            { label: "RPM", value: currentService.requestsPerMinute.toLocaleString('en-US') },
             { label: "Uptime", value: `${(currentService.uptime * 100).toFixed(2)}%` },
           ].map(({ label, value }) => (
             <div
