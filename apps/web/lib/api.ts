@@ -7,9 +7,7 @@ import type {
 } from "@repo/types";
 
 const DEFAULT_BASE_URL =
-  typeof window !== "undefined"
-    ? (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001")
-    : (process.env.API_URL ?? "http://localhost:3001");
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
 async function request<T>(
   path: string,

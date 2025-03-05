@@ -61,7 +61,12 @@ function Section({
           background: "var(--bg-elevated)",
         }}
       >
-        <Icon size={14} strokeWidth={1.75} style={{ color: "var(--fg-muted)" }} aria-hidden />
+        <Icon
+          size={14}
+          strokeWidth={1.75}
+          style={{ color: "var(--fg-muted)" }}
+          aria-hidden
+        />
         <span
           style={{
             fontSize: "0.8125rem",
@@ -73,14 +78,29 @@ function Section({
           {title}
         </span>
       </div>
-      <div style={{ padding: "1rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <div
+        style={{
+          padding: "1rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+        }}
+      >
         {children}
       </div>
     </section>
   );
 }
 
-function Row({ label, description, children }: { label: string; description?: string; children: React.ReactNode }) {
+function Row({
+  label,
+  description,
+  children,
+}: {
+  label: string;
+  description?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div
       style={{
@@ -90,10 +110,27 @@ function Row({ label, description, children }: { label: string; description?: st
         gap: "2rem",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.125rem", minWidth: 0 }}>
-        <span style={{ fontSize: "0.8125rem", color: "var(--fg)", fontWeight: 500 }}>{label}</span>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.125rem",
+          minWidth: 0,
+        }}
+      >
+        <span
+          style={{ fontSize: "0.8125rem", color: "var(--fg)", fontWeight: 500 }}
+        >
+          {label}
+        </span>
         {description && (
-          <span style={{ fontSize: "0.75rem", color: "var(--fg-muted)", lineHeight: 1.5 }}>
+          <span
+            style={{
+              fontSize: "0.75rem",
+              color: "var(--fg-muted)",
+              lineHeight: 1.5,
+            }}
+          >
             {description}
           </span>
         )}
@@ -151,7 +188,13 @@ function SegmentedControl<T extends string | number>({
   );
 }
 
-function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) {
+function Toggle({
+  checked,
+  onChange,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+}) {
   return (
     <button
       role="switch"
@@ -208,7 +251,9 @@ function ThemeButton({
         padding: "0.75rem 1rem",
         borderRadius: "0.375rem",
         border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`,
-        background: active ? "color-mix(in srgb, var(--accent) 8%, var(--bg-surface))" : "var(--bg-elevated)",
+        background: active
+          ? "color-mix(in srgb, var(--accent) 8%, var(--bg-surface))"
+          : "var(--bg-elevated)",
         color: active ? "var(--accent)" : "var(--fg-muted)",
         cursor: "pointer",
         transition: "all 0.15s",
@@ -216,7 +261,9 @@ function ThemeButton({
       }}
     >
       <Icon size={16} strokeWidth={1.75} aria-hidden />
-      <span style={{ fontSize: "0.75rem", fontWeight: active ? 500 : 400 }}>{label}</span>
+      <span style={{ fontSize: "0.75rem", fontWeight: active ? 500 : 400 }}>
+        {label}
+      </span>
     </button>
   );
 }
@@ -252,7 +299,10 @@ export default function SettingsPage() {
     setSettings(loadSettings());
   }, []);
 
-  function update<K extends keyof DashboardSettings>(key: K, value: DashboardSettings[K]) {
+  function update<K extends keyof DashboardSettings>(
+    key: K,
+    value: DashboardSettings[K],
+  ) {
     setSettings((prev) => {
       const next = { ...prev, [key]: value };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
@@ -262,17 +312,29 @@ export default function SettingsPage() {
     setTimeout(() => setSaved(false), 2000);
   }
 
-  const apiUrl =
-    typeof window !== "undefined"
-      ? (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001")
-      : "http://localhost:3001";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
   return (
     <Shell>
-      <div style={{ maxWidth: "640px", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+      <div
+        style={{
+          maxWidth: "640px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1.5rem",
+        }}
+      >
         {/* Header */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}
+          >
             <h1
               style={{
                 fontFamily: "var(--font-sans)",
@@ -304,15 +366,40 @@ export default function SettingsPage() {
 
         {/* Appearance */}
         <Section icon={Sun} title="Appearance">
-          <Row label="Theme" description="Choose between light, dark, or your system preference.">
+          <Row
+            label="Theme"
+            description="Choose between light, dark, or your system preference."
+          >
             {mounted ? (
               <div style={{ display: "flex", gap: "0.5rem" }}>
-                <ThemeButton icon={Sun} label="Light" active={theme === "light"} onClick={() => setTheme("light")} />
-                <ThemeButton icon={Moon} label="Dark" active={theme === "dark"} onClick={() => setTheme("dark")} />
-                <ThemeButton icon={Monitor} label="System" active={theme === "system"} onClick={() => setTheme("system")} />
+                <ThemeButton
+                  icon={Sun}
+                  label="Light"
+                  active={theme === "light"}
+                  onClick={() => setTheme("light")}
+                />
+                <ThemeButton
+                  icon={Moon}
+                  label="Dark"
+                  active={theme === "dark"}
+                  onClick={() => setTheme("dark")}
+                />
+                <ThemeButton
+                  icon={Monitor}
+                  label="System"
+                  active={theme === "system"}
+                  onClick={() => setTheme("system")}
+                />
               </div>
             ) : (
-              <div style={{ height: "4rem", width: "15rem", background: "var(--bg-elevated)", borderRadius: "0.375rem" }} />
+              <div
+                style={{
+                  height: "4rem",
+                  width: "15rem",
+                  background: "var(--bg-elevated)",
+                  borderRadius: "0.375rem",
+                }}
+              />
             )}
           </Row>
         </Section>
@@ -330,7 +417,12 @@ export default function SettingsPage() {
                 { label: "30s", value: 30 as const },
                 { label: "60s", value: 60 as const },
               ]}
-              onChange={(v) => update("refreshInterval", v as DashboardSettings["refreshInterval"])}
+              onChange={(v) =>
+                update(
+                  "refreshInterval",
+                  v as DashboardSettings["refreshInterval"],
+                )
+              }
             />
           </Row>
           <Row
@@ -344,7 +436,9 @@ export default function SettingsPage() {
                 { label: "100", value: 100 as const },
                 { label: "200", value: 200 as const },
               ]}
-              onChange={(v) => update("maxLogEntries", v as DashboardSettings["maxLogEntries"])}
+              onChange={(v) =>
+                update("maxLogEntries", v as DashboardSettings["maxLogEntries"])
+              }
             />
           </Row>
         </Section>
@@ -362,7 +456,12 @@ export default function SettingsPage() {
                 { label: "Warning", value: "warning" as const },
                 { label: "Critical", value: "critical" as const },
               ]}
-              onChange={(v) => update("alertMinSeverity", v as DashboardSettings["alertMinSeverity"])}
+              onChange={(v) =>
+                update(
+                  "alertMinSeverity",
+                  v as DashboardSettings["alertMinSeverity"],
+                )
+              }
             />
           </Row>
           <Row
@@ -378,7 +477,10 @@ export default function SettingsPage() {
 
         {/* API */}
         <Section icon={Server} title="API">
-          <Row label="Endpoint" description="Base URL used by the dashboard to fetch data.">
+          <Row
+            label="Endpoint"
+            description="Base URL used by the dashboard to fetch data."
+          >
             <ReadonlyField value={apiUrl} />
           </Row>
           <Row label="WebSocket" description="Real-time event stream endpoint.">

@@ -4,7 +4,7 @@ export const revalidate = 30;
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const apiUrl = process.env.API_URL ?? "http://localhost:3001";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
   const upstream = `${apiUrl}/api/metrics?${searchParams.toString()}`;
 
   try {

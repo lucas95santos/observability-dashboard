@@ -18,7 +18,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
       id,
       undefined,
       undefined,
-      process.env.API_URL ?? "http://localhost:3001",
+      process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001",
     );
     initialPoints = result.points;
   } catch {
