@@ -1,0 +1,146 @@
+<mxfile host="65bd71144e">
+    <diagram id="arch-overview" name="Architecture Overview">
+        <mxGraphModel dx="980" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="960" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="Observability Dashboard — High-Level Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="10" width="700" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw-browser" value="Browser (Client Layer)" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="60" width="1320" height="175" as="geometry"/>
+                </mxCell>
+                <mxCell id="app-router" value="&lt;b&gt;Next.js App Router&lt;/b&gt;&lt;br&gt;RSC + Client Components" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="sw-browser" vertex="1">
+                    <mxGeometry x="30" y="50" width="170" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="react-query" value="&lt;b&gt;React Query v5&lt;/b&gt;&lt;br&gt;Cache · Polling · staleTime 30s" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="sw-browser" vertex="1">
+                    <mxGeometry x="220" y="50" width="160" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="ws-hook" value="&lt;b&gt;WebSocket Hook&lt;/b&gt;&lt;br&gt;Exp. backoff · Ring buffer 500" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="sw-browser" vertex="1">
+                    <mxGeometry x="400" y="50" width="160" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="recharts" value="&lt;b&gt;Recharts&lt;/b&gt;&lt;br&gt;Latency · ErrorRate · Volume" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="sw-browser" vertex="1">
+                    <mxGeometry x="580" y="50" width="150" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="ui-layer" value="&lt;b&gt;UI Layer&lt;/b&gt;&lt;br&gt;Tailwind CSS 4 · Lucide · Sonner" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="sw-browser" vertex="1">
+                    <mxGeometry x="750" y="50" width="190" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="pages" value="&lt;b&gt;Pages&lt;/b&gt;&lt;br&gt;/ · /metrics · /alerts · /logs · /services/[id] · /settings" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="sw-browser" vertex="1">
+                    <mxGeometry x="960" y="50" width="330" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw-nextjs" value="Next.js Server  (:3000)" style="swimlane;startSize=30;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="270" width="1320" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="ssr" value="&lt;b&gt;Server Components&lt;/b&gt;&lt;br&gt;SSR · Initial render · getServices()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="sw-nextjs" vertex="1">
+                    <mxGeometry x="250" y="45" width="220" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="server-fetch" value="&lt;b&gt;Server-side Fetch&lt;/b&gt;&lt;br&gt;API_URL env · HTTP GET" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="sw-nextjs" vertex="1">
+                    <mxGeometry x="900" y="45" width="200" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw-fastify" value="Mock API  ·  Fastify (:3001)" style="swimlane;startSize=30;fillColor=#ffe6cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="445" width="1320" height="305" as="geometry"/>
+                </mxCell>
+                <mxCell id="rest-routes" value="&lt;b&gt;REST Routes&lt;/b&gt;&lt;br&gt;GET /api/services&lt;br&gt;GET /api/metrics&lt;br&gt;GET /api/alerts&lt;br&gt;GET /api/logs&lt;br&gt;GET /health" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;" parent="sw-fastify" vertex="1">
+                    <mxGeometry x="30" y="45" width="190" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="ws-route" value="&lt;b&gt;WebSocket Route&lt;/b&gt;&lt;br&gt;/ws/events&lt;br&gt;&lt;br&gt;metrics_update&lt;br&gt;alert_triggered/resolved&lt;br&gt;log_entry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;" parent="sw-fastify" vertex="1">
+                    <mxGeometry x="250" y="45" width="190" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="plugins" value="&lt;b&gt;Plugins&lt;/b&gt;&lt;br&gt;@fastify/swagger&lt;br&gt;@fastify/cors&lt;br&gt;@fastify/websocket" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;" parent="sw-fastify" vertex="1">
+                    <mxGeometry x="470" y="45" width="160" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw-simulator" value="ServiceSimulator  (State Machine · Box-Muller · EventEmitter)" style="swimlane;startSize=30;fillColor=#ffd966;strokeColor=#d6b656;fontStyle=1;" parent="sw-fastify" vertex="1">
+                    <mxGeometry x="660" y="35" width="630" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc-gateway" value="&lt;b&gt;gateway-service&lt;/b&gt;&lt;br&gt;25ms · 2000 RPM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="sw-simulator" vertex="1">
+                    <mxGeometry x="20" y="45" width="140" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc-auth" value="&lt;b&gt;auth-service&lt;/b&gt;&lt;br&gt;45ms · 1200 RPM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="sw-simulator" vertex="1">
+                    <mxGeometry x="180" y="45" width="130" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc-notif" value="&lt;b&gt;notification-service&lt;/b&gt;&lt;br&gt;80ms · 320 RPM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="sw-simulator" vertex="1">
+                    <mxGeometry x="330" y="45" width="140" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc-payment" value="&lt;b&gt;payment-service&lt;/b&gt;&lt;br&gt;120ms · 450 RPM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="sw-simulator" vertex="1">
+                    <mxGeometry x="490" y="45" width="120" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="event-emitter" value="&lt;b&gt;EventEmitter&lt;/b&gt;&lt;br&gt;Degradation · Recovery · Ticks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;" parent="sw-simulator" vertex="1">
+                    <mxGeometry x="190" y="155" width="240" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw-shared" value="Shared Packages  ·  Turborepo Monorepo" style="swimlane;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="785" width="1320" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="types" value="&lt;b&gt;@repo/types&lt;/b&gt;&lt;br&gt;ServiceMetrics · Alert · LogEntry · RealtimeEvent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="sw-shared" vertex="1">
+                    <mxGeometry x="100" y="40" width="260" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="eslint-config" value="&lt;b&gt;@repo/eslint-config&lt;/b&gt;&lt;br&gt;Shared ESLint rules" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="sw-shared" vertex="1">
+                    <mxGeometry x="410" y="40" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ts-config" value="&lt;b&gt;@repo/typescript-config&lt;/b&gt;&lt;br&gt;Shared tsconfig presets" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="sw-shared" vertex="1">
+                    <mxGeometry x="660" y="40" width="210" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="turborepo" value="&lt;b&gt;Turborepo 2.x&lt;/b&gt;&lt;br&gt;Build · Dev · Lint · Type-check" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="sw-shared" vertex="1">
+                    <mxGeometry x="930" y="40" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-browser-nextjs" value="HTTP · Page Request / SSR HTML" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;startArrow=block;startFill=1;strokeColor=#6c8ebf;fontColor=#6c8ebf;fontSize=10;" parent="1" source="app-router" target="ssr" edge="1">
+                    <mxGeometry x="-0.0833" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="180" y="210"/>
+                            <mxPoint x="400" y="210"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-nextjs-api" value="HTTP GET (server-side fetch)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeColor=#82b366;fontColor=#82b366;fontSize=10;" parent="1" source="server-fetch" target="rest-routes" edge="1">
+                    <mxGeometry x="-0.3896" y="-7" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="170" y="348"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-rq-api" value="HTTP GET (React Query)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeColor=#6c8ebf;fontColor=#6c8ebf;fontSize=10;" parent="1" source="react-query" target="rest-routes" edge="1">
+                    <mxGeometry x="-0.3265" y="10" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="340" y="250"/>
+                            <mxPoint x="190" y="250"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-ws" value="WebSocket  ws://localhost:3001/ws/events" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;endArrow=block;endFill=1;startArrow=block;startFill=1;strokeColor=#b85450;fontColor=#b85450;fontSize=10;" parent="1" source="ws-hook" target="ws-route" edge="1">
+                    <mxGeometry y="40" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="520" y="420"/>
+                            <mxPoint x="385" y="420"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-emitter-ws" value="events fanout" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;endArrow=block;endFill=1;strokeColor=#d6b656;fontColor=#d6b656;fontSize=10;" parent="1" source="event-emitter" target="ws-route" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-svc-emitter" value="degradation events" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeColor=#d6b656;fontColor=#d6b656;fontSize=10;" parent="1" source="svc-gateway" target="event-emitter" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="790" y="610"/>
+                            <mxPoint x="1010" y="610"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-web-types" value="imports types" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;fontColor=#9673a6;fontSize=10;" parent="1" source="app-router" target="types" edge="1">
+                    <mxGeometry x="-0.9085" y="-35" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="155" y="420"/>
+                            <mxPoint x="270" y="420"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-api-types" value="imports types" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;fontColor=#9673a6;fontSize=10;" parent="1" source="rest-routes" target="types" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
